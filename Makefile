@@ -51,14 +51,20 @@ override STD_DEFS += -D'CS_SMOD_VERSION="$(shell ./config.sh --oscam-revision | 
 override STD_DEFS += -D'CS_SMOD_VERSION_HASH="$(shell ./config.sh --oscam-revision | cut -d "+" -f3)"'
 override STD_DEFS += -D'CS_CONFDIR="$(CONF_DIR)"'
 
+MODFLAGS_OPTS = -fwrapv -fomit-frame-pointer -funroll-loops -fno-tree-vectorize
+
 # Compiler warnings
-CC_WARN = -W -Wall -Wshadow -Wredundant-decls -Wstrict-prototypes -Wold-style-definition
+CC_WARN = -W -Wall -Wshadow -Wno-shadow -Wredundant-decls -Wstrict-prototypes -Wold-style-definition
 
 # Compiler optimizations
-CC_OPTS = -O2 -ggdb -pipe -ffunction-sections -fdata-sections
+CC_OPTS = -Os -ggdb -pipe -ffunction-sections -fdata-sections $(MODFLAGS_OPTS)
 
 CC = $(CROSS_DIR)$(CROSS)gcc
 STRIP = $(CROSS_DIR)$(CROSS)strip
+ifeq "$(shell $(CC) -dumpmachine | cut -d'-' -f1 2>/dev/null)" "aarch64"
+LD = $(CROSS_DIR)$(CROSS)ld
+OBJCOPY = $(CROSS_DIR)$(CROSS)objcopy
+endif
 
 LDFLAGS += -Wl,--gc-sections
 
