@@ -353,6 +353,17 @@ table.statsbalance td.subheadline a:hover {
 table.statsbalance tr:hover td.subheadline {
 	background-color:#2F3133
 }
+/* scanusb.html */
+table.scanusb {}
+/* On/Off button for readers and users in readers.html and userconfig.html*/
+td.readercol0 a img.icon,
+td.usercol0 a img.icon {
+	background-color:#0A0
+}
+td.readercol0 a:hover img.icon,
+td.usercol0 a:hover img.icon {
+	background-color:#00D814
+}
 
 /* ------- USERS ------- */
 /* userconfig.html */
